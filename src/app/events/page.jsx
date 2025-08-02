@@ -1,16 +1,20 @@
 "use client"
 
-import { useUser, UserButton, } from '@clerk/nextjs'
-import { redirect } from 'next/navigation'
+import { UserButton, useAuth } from '@clerk/nextjs'
+import { useRouter } from 'next/navigation'
 import EventGrid from '@/app/components/EventGrid'
 import { Calendar } from 'lucide-react'
+import { useEffect } from 'react'
 
-export default  function EventsPage() {
-  const { user } = useUser()
-  
-  if (!user?.id) {
-    redirect('/sign-in')
-  }
+export default function EventsPage() {
+  const { userId } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!userId){
+      router.push('/sign-in')
+    }
+  }, [userId, router])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
@@ -26,13 +30,12 @@ export default  function EventsPage() {
                 </span>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-4">
               <div className="hidden sm:flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
                 <span>Welcome back!</span>
               </div>
               <UserButton 
-                fallbackRedirectUrl="/"
                 appearance={{
                   elements: {
                     avatarBox: "w-10 h-10"

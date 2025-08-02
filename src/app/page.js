@@ -1,16 +1,20 @@
 "use client"
 
-import { SignInButton, SignUpButton, useUser} from '@clerk/nextjs'
-import { redirect } from 'next/navigation'
+import { SignInButton, SignUpButton, useAuth} from '@clerk/nextjs'
+import { redirect, useRouter } from 'next/navigation'
 import { Calendar, Users, Star, Crown } from 'lucide-react'
+import { useEffect } from 'react'
 
 export default function HomePage() {
 
-  const { user } = useUser()
-  
-  if (user?.id) {
-    redirect('/events')
-  }
+  const { userId } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (userId) {
+      router.push('/events')
+    }
+  }, [userId, router])
 
   return (
     <div className="min-h-screen flex flex-col bg-violet-800">
@@ -25,13 +29,13 @@ export default function HomePage() {
           <p className="mt-6 text-lg sm:text-xl text-gray-200 max-w-2xl mx-auto">
             Discover premium events tailored to your membership level — from community meetups to executive summits.
           </p>
-          {!user?.id && <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          {!userId && <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <SignUpButton mode="modal">
               <button className="px-8 py-3 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition">
                 Get Started
               </button>
             </SignUpButton>
-            <SignInButton mode="modal">
+            <SignInButton mode="modal" fallbackRedirectUrl='/events'>
               <button className="px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-gray-900 transition">
                 Sign In
               </button>
