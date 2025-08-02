@@ -1,9 +1,24 @@
-import React from 'react'
 
-const TierBadge = () => {
+
+export default function TierBadge({ tier, className = '' }) {
+  const getTierClasses = (tier) => {
+    switch (tier) {
+      case 'free':
+        return 'tier-free'
+      case 'silver':
+        return 'tier-silver'
+      case 'gold':
+        return 'tier-gold'
+      case 'platinum':
+        return 'tier-platinum'
+      default:
+        return 'tier-free'
+    }
+  }
+
   return (
-    <div>TierBadge</div>
+    <span className={`tier-badge ${getTierClasses(tier)} ${className}`}>
+      {tier}
+    </span>
   )
 }
-
-export default TierBadge

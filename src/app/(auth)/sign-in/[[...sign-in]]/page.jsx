@@ -1,9 +1,24 @@
-import React from 'react'
+"use client"
 
-const page = () => {
+import { SignIn } from '@clerk/nextjs'
+
+export default function SignInPage() {
   return (
-    <div>page</div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
+      <div className="max-w-md w-full mx-4">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+          <p className="text-gray-200">Sign in to access your tier-based events</p>
+        </div>
+        <SignIn 
+          appearance={{
+            elements: {
+              formButtonPrimary: 'bg-indigo-600 hover:bg-indigo-700',
+              card: 'shadow-2xl',
+            }
+          }}
+        />
+      </div>
+    </div>
   )
 }
-
-export default page

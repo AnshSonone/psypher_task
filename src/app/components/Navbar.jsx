@@ -26,7 +26,9 @@ const Navbar = () => {
               </a>
             </div>
           </div>
-            <SignedOut />
+            <SignedOut
+              
+            />
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
